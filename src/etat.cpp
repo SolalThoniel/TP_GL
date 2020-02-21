@@ -2,5 +2,5 @@
 #include <iostream>
 
 void Etat::print() const {
-	cout << this.name;
+	cout << name;
 }
