@@ -1,5 +1,4 @@
 #include <iostream>
-#include "main.h"
 #include "lexer.h"
 #include "automate.h"
 
