@@ -1,7 +1,7 @@
 class Etat {
 	
 public:
-	Etat(string name);
+	Etat(string name) : name(name) {}
 	virtual ~Etat();
 	void print() const;
 	virtual bool transition(Automate & automate,Symbole * s) = 0;
