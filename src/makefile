@@ -1,24 +1,21 @@
-ECHO=echo
-RM=rm
-COMP=g++
-EDL=g++
-INT=main.h symbole.h lexer.h
-REAL=$(INT:.h=.cpp)
-OBJ=$(REAL:.cpp=.o)
-EXE=exec
+exe=LALR_TP
+cpp=main.cpp lexer.cpp symbole.cpp etat.cpp automate.cpp
+head=$(cpp:.cpp=.h)
+obj=$(head:.h=.o)
+comp=g++ -ansi -pedantic -Wall -std=c++11 -g -D MAP
+edl=-lm
 
-CPPFLAGS=-W -Wall -ansi -pedantic -std=c++11
-LDFLAGS=-W -Wall -ansi -pedantic -std=c++11
-RMFLAGS=-f
-EFFACE=efface
+$(exe) : $(obj)
+	g++ -o $(exe) $(obj) $(edl)
 
-%.o = %.cpp
-	$(ECHO) "compil de <$<>"
-	$(COMP) -o %.o -c $< $(CPPFLAGS)
+%.o : %.cpp %.h
+	$(comp) -c $<
 
-$(EXE) : $(OBJ)
-	$(ECHO) "Edl de <$<>"
-	$(EDL) -o $(EXE) $(OBJ) $(LDFLAGS)
+main.o : main.cpp
+lexer.o : lexer.cpp lexer.h
+symbole.o : symbole.cpp symbole.h
+etat.o : etat.cpp automate.h
+automate.o : automate.cpp automate.h etat.h
 
-$(EFFACE) :
-	$(RM) $(RMFLAGS)
+clean :
+	rm $(obj)
