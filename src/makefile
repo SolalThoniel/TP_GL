@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 exe=LALR_TP
 cpp=main.cpp lexer.cpp symbole.cpp etat.cpp automate.cpp
 head=$(cpp:.cpp=.h)
@@ -19,3 +20,5 @@ automate.o : automate.cpp automate.h etat.h
 
 clean :
 	rm $(obj)
+=======
+>>>>>>> 184e3e7995b0f5efb03bf0043fcce4e9d05dbca2
