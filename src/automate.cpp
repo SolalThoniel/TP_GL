@@ -17,6 +17,11 @@ void Automate::reduction(int n, Symbole * s) {
 	statestack.back()->transition(*this, s);
 }
 
+void Automate::transition(Symbole * s)
+{
+	statestack.back()->transition(*this, s);
+}
+
 Symbole * Automate::popSymbol()
 {
 	Symbole *s = symbolstack.back();

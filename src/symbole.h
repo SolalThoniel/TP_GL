@@ -26,6 +26,7 @@ class Entier : public Symbole {
       Entier(int v) : Symbole(INT, true), valeur(v) { }
       ~Entier() { }
       virtual void Affiche();
+      int getVal() {return valeur;}
    protected:
       int valeur;
 };
@@ -33,27 +34,32 @@ class Entier : public Symbole {
 class Expr : public Symbole {
    public:
       Expr() : Symbole(EXPR, false) {}
-      virtual double eval(const map<string, double> &valeurs) = 0;
+      virtual int eval() = 0;
 };
 
 class ExprPlus : public Expr {
    public:
-      ExprPlus() : Expr() {}
-      virtual double eval(const map<string, double> &valeurs);
+      ExprPlus(Expr *e1, Expr *e2) : Expr(), expr1(e1), expr2(e2) {}
+      int eval() {return expr1->eval()+expr2->eval();}
+   protected:
+      Expr *expr1;
+      Expr *expr2;
+
 };
 
 class ExprMult : public Expr {
    public:
-      ExprMult() : Expr() {}
-      virtual double eval(const map<string, double> &valeurs);
+      ExprMult(Expr *e1, Expr *e2) : Expr(), expr1(e1), expr2(e2) {}
+      int eval() {return expr1->eval()*expr2->eval();}
+   protected:
+      Expr *expr1;
+      Expr *expr2;
 };
 
 class ExprConst : public Expr {
    public:
-      ExprConst() : Expr() {}
-      virtual double eval(const map<string, double> &valeurs);
-
+      ExprConst(Entier *en) : Expr(), entier(en) {}
+      int eval() {return entier->getVal();}
    protected:
-      int valeur;
+      Entier *entier;
 };
-

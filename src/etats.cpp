@@ -1,8 +1,11 @@
 #include "etats.h"
+#include "automate.h"
 
-bool E0::transition(Automate & automate, Symbole * s){
-	
-	switch (*s){
+bool E0::transition(Automate &automate, Symbole *s)
+{
+
+	switch (*s)
+	{
 	case INT:
 		automate.decalage(s, new E3);
 		break;
@@ -13,13 +16,15 @@ bool E0::transition(Automate & automate, Symbole * s){
 		automate.decalage(s, new E1);
 		break;
 	}
-	
+
 	return false;
 }
 
-bool E1::transition(Automate & automate, Symbole * s){
-	
-	switch (*s){
+bool E1::transition(Automate &automate, Symbole *s)
+{
+
+	switch (*s)
+	{
 	case PLUS:
 		automate.decalage(s, new E4);
 		break;
@@ -28,13 +33,15 @@ bool E1::transition(Automate & automate, Symbole * s){
 		break;
 	case FIN:
 	}
-	
+
 	return false;
 }
 
-bool E2::transition(Automate & automate, Symbole * s){
-	
-	switch (*s){
+bool E2::transition(Automate &automate, Symbole *s)
+{
+
+	switch (*s)
+	{
 	case INT:
 		automate.decalage(s, new E3);
 		break;
@@ -45,28 +52,32 @@ bool E2::transition(Automate & automate, Symbole * s){
 		automate.decalage(s, new E6);
 		break;
 	}
-	
+
 	return false;
 }
 
-bool E3::transition(Automate & automate, Symbole * s){
-	
-	switch (*s){
+bool E3::transition(Automate &automate, Symbole *s)
+{
+
+	switch (*s)
+	{
 	case INT:
 	case OPENPAR:
 	case EXPR:
 	default:
-		Expr * s1 = (Expr*) automate.popSymbol();
-		automate.reduction(1,new ExprConst(s1));
+		Entier *en1 = (Entier *)automate.popSymbol();
+		automate.reduction(1, new ExprConst(en1));
 		break;
 	}
-	
+
 	return false;
 }
 
-bool E4::transition(Automate & automate, Symbole * s){
-	
-	switch (*s){
+bool E4::transition(Automate &automate, Symbole *s)
+{
+
+	switch (*s)
+	{
 	case INT:
 		automate.decalage(s, new E3);
 		break;
@@ -81,9 +92,11 @@ bool E4::transition(Automate & automate, Symbole * s){
 	return false;
 }
 
-bool E5::transition(Automate & automate, Symbole * s){
-	
-	switch (*s){
+bool E5::transition(Automate &automate, Symbole *s)
+{
+
+	switch (*s)
+	{
 	case INT:
 		automate.decalage(s, new E3);
 		break;
@@ -94,13 +107,15 @@ bool E5::transition(Automate & automate, Symbole * s){
 		automate.decalage(s, new E8);
 		break;
 	}
-	
+
 	return false;
 }
 
-bool E6::transition(Automate & automate, Symbole * s){
-	
-	switch (*s){
+bool E6::transition(Automate &automate, Symbole *s)
+{
+
+	switch (*s)
+	{
 	case PLUS:
 		automate.decalage(s, new E4);
 		break;
@@ -111,13 +126,15 @@ bool E6::transition(Automate & automate, Symbole * s){
 		automate.decalage(s, new E9);
 		break;
 	}
-	
+
 	return false;
 }
 
-bool E7::transition(Automate & automate, Symbole * s){
-	
-	switch (*s){
+bool E7::transition(Automate &automate, Symbole *s)
+{
+
+	switch (*s)
+	{
 	case INT:
 	case OPENPAR:
 	case EXPR:
@@ -125,44 +142,48 @@ bool E7::transition(Automate & automate, Symbole * s){
 		automate.decalage(s, new E5);
 		break;
 	default:
-		Expr * s1 = (Expr*) automate.popSymbol();
+		Expr *e1 = (Expr *)automate.popSymbol();
 		automate.popAndDestroySymbol();
-		Expr * s2 = (Expr*) automate.popSymbol();
-		automate.reduction(3,new ExprPlus(s2,s1));
+		Expr *e2 = (Expr *)automate.popSymbol();
+		automate.reduction(3, new ExprPlus(e2, e1));
 		break;
 	}
 
 	return false;
 }
 
-bool E8::transition(Automate & automate, Symbole * s){
+bool E8::transition(Automate &automate, Symbole *s)
+{
 
-	switch (*s){
+	switch (*s)
+	{
 	case INT:
 	case OPENPAR:
 	case EXPR:
 	default:
-		Expr * s1 = (Expr*) automate.popSymbol();
+		Expr *e1 = (Expr *)automate.popSymbol();
 		automate.popAndDestroySymbol();
-		Expr * s2 = (Expr*) automate.popSymbol();
-		automate.reduction(3,new ExprMult(s2,s1));
+		Expr *e2 = (Expr *)automate.popSymbol();
+		automate.reduction(3, new ExprMult(e2, e1));
 		break;
 	}
 
 	return false;
 }
 
-bool E9::transition(Automate & automate, Symbole * s){
+bool E9::transition(Automate &automate, Symbole *s)
+{
 
-	switch (*s){
+	switch (*s)
+	{
 	case INT:
 	case OPENPAR:
 	case EXPR:
 	default:
 		automate.popAndDestroySymbol();
-		Expr * s1 = (Expr*) automate.popSymbol();
+		Expr *e1 = (Expr *)automate.popSymbol();
 		automate.popAndDestroySymbol();
-		automate.reduction(3,s1);
+		automate.reduction(3, e1);
 		break;
 	}
 

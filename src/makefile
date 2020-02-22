@@ -15,6 +15,7 @@ main.o : main.cpp
 lexer.o : lexer.cpp lexer.h
 symbole.o : symbole.cpp symbole.h
 etat.o : etat.cpp automate.h
+etats.o : etats.cpp etats.h automate.h
 automate.o : automate.cpp automate.h etat.h
 
 clean :
