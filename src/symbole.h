@@ -4,7 +4,7 @@
 #include <map>
 using namespace std;
 
-enum Identificateurs { OPENPAR, CLOSEPAR, PLUS, MULT, INT, FIN, ERREUR, EXPR };
+enum Identificateurs { OPENPAR, CLOSEPAR, PLUS, MULT, INT, FIN, ERREUR, EXPR};
 
 const string Etiquettes[] = { "OPENPAR", "CLOSEPAR", "PLUS", "MULT", "INT", "FIN", "ERREUR", "EXPR"};
 
@@ -34,12 +34,24 @@ class Entier : public Symbole {
 class Expr : public Symbole {
    public:
       Expr() : Symbole(EXPR, false) {}
+      virtual ~Expr() {};
       virtual int eval() = 0;
 };
 
 class ExprPlus : public Expr {
    public:
       ExprPlus(Expr *e1, Expr *e2) : Expr(), expr1(e1), expr2(e2) {}
+      virtual ~ExprPlus() 
+      {
+         if(expr1 != nullptr)
+         {
+            delete(expr1);
+         }
+         if(expr2 != nullptr)
+         {
+            delete(expr2);
+         }
+      }
       int eval() {return expr1->eval()+expr2->eval();}
    protected:
       Expr *expr1;
@@ -50,6 +62,17 @@ class ExprPlus : public Expr {
 class ExprMult : public Expr {
    public:
       ExprMult(Expr *e1, Expr *e2) : Expr(), expr1(e1), expr2(e2) {}
+      virtual ~ExprMult() 
+      {
+         if(expr1 != nullptr)
+         {
+            delete(expr1);
+         }
+         if(expr2 != nullptr)
+         {
+            delete(expr2);
+         }
+      }
       int eval() {return expr1->eval()*expr2->eval();}
    protected:
       Expr *expr1;
@@ -59,6 +82,13 @@ class ExprMult : public Expr {
 class ExprConst : public Expr {
    public:
       ExprConst(Entier *en) : Expr(), entier(en) {}
+      virtual ~ExprConst() 
+      {
+         if(entier != nullptr)
+         {
+            delete(entier);
+         }
+      }
       int eval() {return entier->getVal();}
    protected:
       Entier *entier;

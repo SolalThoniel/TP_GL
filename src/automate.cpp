@@ -1,4 +1,7 @@
 #include "automate.h"
+#include <iostream>
+
+using namespace std;
 
 void Automate::decalage(Symbole * s, Etat * e) {
 	symbolstack.push_back(s);
@@ -31,5 +34,27 @@ Symbole * Automate::popSymbol()
 
 void Automate::popAndDestroySymbol()
 {
+	delete(symbolstack.back());
 	symbolstack.pop_back();
+}
+
+void Automate::toString()
+{
+	cout << "Taille pile symboles : " << symbolstack.size() << endl;
+	cout << "Taille pile d'état : " << statestack.size() << endl;
+	for (int x=0; x < statestack.size(); ++x) {
+        statestack[x]->print();
+    }
+	cout << endl;
+}
+
+int Automate::evalFin()
+{
+	Expr* eFin = (Expr*)symbolstack.back();
+	int eval = eFin->eval();
+	return eval;
+}
+
+void Automate::fin(){
+	accepter = true;
 }

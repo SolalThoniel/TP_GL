@@ -1,6 +1,5 @@
-#include "etats.h"
 #include "automate.h"
-
+#include <iostream>
 bool E0::transition(Automate &automate, Symbole *s)
 {
 
@@ -32,6 +31,8 @@ bool E1::transition(Automate &automate, Symbole *s)
 		automate.decalage(s, new E5);
 		break;
 	case FIN:
+		automate.fin();
+		break;
 	}
 
 	return false;

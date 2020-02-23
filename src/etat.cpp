@@ -1,4 +1,4 @@
-#include "automate.h"
+#include "etat.h"
 #include <iostream>
 
 void Etat::print() const {

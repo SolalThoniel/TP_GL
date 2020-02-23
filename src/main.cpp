@@ -1,5 +1,4 @@
 #include <iostream>
-#include "lexer.h"
 #include "automate.h"
 
 
@@ -12,11 +11,15 @@ int main(void) {
    Automate a(&l);
    Symbole * s;
 
-   while(*(s=l.Consulter())!=FIN) {
+   while(a.getAccepter() == false) {
+      s=l.Consulter();
       a.transition(s);
-      cout<<endl;
-      l.Avancer();
    }
+
+   cout << "Le resultat est : " << a.evalFin() << endl;
+
+   delete(s);
+
    return 0;
 }
 
